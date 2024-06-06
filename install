@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+# For this to work correctly, the repository should be cloned within your HOME
+# directory. When this is the case, running `stow` without the `--target`
+# option will use the parent directory (HOME) as the target. If the repository
+# is cloned somewhere else, we will need to specify the target directory
+# manually.
+
+# Navigate to the dotfiles folder and add it to the directory stack
+pushd $DOTFILES
+
+# Iterate over the folders in $STOW_FOLDERS and for each one, unstow if already
+# stowed and then stow it.
+for folder in $(echo $STOW_FOLDERS | sed "s/,/ /g")
+do
+  echo "About to stow the folder: $folder"
+  stow -D $folder
+  stow $folder --ignore=\.DS_Store
+done
+
+# Navigate back to the folder we were in before switching to the dotfiles folder
+# removing it from directory stack
+popd

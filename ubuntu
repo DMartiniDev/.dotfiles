@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+# This file prepares the folders to be stowed when using an Ubuntu system.
+# It sets some environment variables before calling the install script
+# (which is by itself system independent as it works with whatever has been
+# defined in the environment variables).
+
+# If $STOW_FOLDERS is empty or null, fill it with folders to stow
+if [[ -z $STOW_FOLDERS ]]; then
+  STOW_FOLDERS="nvim"
+fi
+
+# If #DOTFILES is null, set it to the '.dotfiles' directory within HOME.
+# This assumes that this repository has been cloned in the HOME directory.
+if [[ -z $DOTFILES ]]; then
+  DOTFILES=$HOME/.dotfiles
+fi
+
+# Run the install script for dotfiles
+. $DOTFILES/install
+
